@@ -1,0 +1,34 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'todo/style.css' %}">
+<div class="container" >
+
+    <a class="primary_button" href="{% url 'todo:create_task' %}">Create Task</a>
+    <hr/>
+    {% if todo_list %}
+    {% for task in todo_list %}
+    <div class="card">
+        <div class="container">
+            <h1>{{task.title}}</h1>
+
+
+            <p>{{task.description}}</p>
+            <p><b>Due date: </b>{{task.due_date}}</p>
+            <p><b>Status: </b>{{task.status}}</p>
+            <p><b>Created on: </b>{{task.timestamp}}</p>
+            <a class="success_button" href="{% url 'todo:task' task.id %}">Actions</a>
+
+            <h4>Tags</h4>
+
+            {% for tag in task.tags.all %}
+            <p class="chips">
+                {{tag}}
+            </p>
+            {% endfor %}
+
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No Tasks are available.</p>
+    {% endif %}
+</div>
